@@ -119,9 +119,6 @@ void ROSflight::run()
   // update the state machine, an internal timer runs this at a fixed rate
   state_manager_.run();
 
-  // get RC, an internal timer runs this every 20 ms (50 Hz)
-  rc_.run();
-
   // update commands (internal logic tells whether or not we should do anything or not)
   command_manager_.run();
 }

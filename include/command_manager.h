@@ -160,6 +160,7 @@ private:
   ROSflight &RF_;
 
   bool new_command_;
+  bool F_active_;
   bool rc_override_;
 
   control_t &failsafe_command_;
@@ -172,7 +173,7 @@ private:
   void do_min_throttle_muxing();
 
   void interpret_rc(void);
-  bool stick_deviated(MuxChannel channel);
+  bool stick_deviated();
 
 public:
 

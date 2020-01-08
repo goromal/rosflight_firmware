@@ -205,64 +205,7 @@ bool RC::check_rc_lost()
   return failsafe;
 }
 
-void RC::look_for_arm_disarm_signal()
-{
-  uint32_t now_ms = RF_.board_.clock_millis();
-  uint32_t dt = now_ms - prev_time_ms;
-  prev_time_ms = now_ms;
-  // check for arming switch
-  if (!switch_mapped(SWITCH_ARM))
-  {
-    if (!RF_.state_manager_.state().armed) // we are DISARMED
-    {
-      // if left stick is down and to the right
-      if ((RF_.rc_.stick(STICK_F) < RF_.params_.get_param_float(PARAM_ARM_THRESHOLD))
-          && (RF_.rc_.stick(STICK_Z) > (1.0f - RF_.params_.get_param_float(PARAM_ARM_THRESHOLD))))
-      {
-        time_sticks_have_been_in_arming_position_ms += dt;
-      }
-      else
-      {
-        time_sticks_have_been_in_arming_position_ms = 0;
-      }
-      if (time_sticks_have_been_in_arming_position_ms > 1000)
-      {
-        RF_.state_manager_.set_event(StateManager::EVENT_REQUEST_ARM);
-      }
-    }
-    else // we are ARMED
-    {
-      // if left stick is down and to the left
-      if (RF_.rc_.stick(STICK_F) < RF_.params_.get_param_float(PARAM_ARM_THRESHOLD)
-          && RF_.rc_.stick(STICK_Z) < -(1.0f - RF_.params_.get_param_float(PARAM_ARM_THRESHOLD)))
-      {
-        time_sticks_have_been_in_arming_position_ms += dt;
-      }
-      else
-      {
-        time_sticks_have_been_in_arming_position_ms = 0;
-      }
-      if (time_sticks_have_been_in_arming_position_ms > 1000)
-      {
-        RF_.state_manager_.set_event(StateManager::EVENT_REQUEST_DISARM);
-        time_sticks_have_been_in_arming_position_ms = 0;
-      }
-    }
-  }
-  else // ARMING WITH SWITCH
-  {
-    if (RF_.rc_.switch_on(SWITCH_ARM))
-    {
-      if (!RF_.state_manager_.state().armed)
-        RF_.state_manager_.set_event(StateManager::EVENT_REQUEST_ARM);;
-    }
-    else
-    {
-      RF_.state_manager_.set_event(StateManager::EVENT_REQUEST_DISARM);
-    }
-  }
-}
-
+void RC::look_for_arm_disarm_signal() {}
 
 bool RC::run()
 {
