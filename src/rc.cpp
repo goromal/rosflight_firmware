@@ -306,7 +306,7 @@ bool RC::run()
       }
       else
       {
-        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) >= 0.5; // 0.8;
+        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) >= 0.55; // 0.8;
       }
     }
     else
