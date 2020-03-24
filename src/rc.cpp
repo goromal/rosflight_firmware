@@ -302,11 +302,11 @@ bool RC::run()
     {
       if (switches[channel].direction < 0)
       {
-        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) < 0.2;
+        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) < 0.45; // 0.2;
       }
       else
       {
-        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) >= 0.8;
+        switch_values[channel] = RF_.board_.rc_read(switches[channel].channel) >= 0.5; // 0.8;
       }
     }
     else
